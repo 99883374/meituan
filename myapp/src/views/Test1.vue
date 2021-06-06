@@ -1,8 +1,6 @@
 <template>
     <div>
-        我是首页
-        <router-link to="/home/test1">test1</router-link>
-        <router-view></router-view>
+        test1子页面
     </div>
 </template>
 

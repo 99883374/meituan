@@ -50,9 +50,9 @@ git add 文件名
 git commit -m "描述"
 ```
 
-### 拉取main分支里的代码
+### 拉取某分支里的代码
 ```
-git pull origin main
+git pull origin 分支名
 ```
 
 ### 将本地的分支和远程相关联

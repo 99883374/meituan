@@ -1,6 +1,6 @@
 <template>
     <div>
-        我是首页
+        我是首页{{$route.params.name}}{{$route.params.age}}
         <router-link to="/home/test1">test1</router-link>
         <router-view></router-view>
     </div>

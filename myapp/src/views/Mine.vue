@@ -1,6 +1,9 @@
 <template>
     <div>
         我的页面
+        <!-- {{$route.query.name}}{{$route.query.age}} -->
+        {{$route.params.name}}
+        {{$route.params.age}}
     </div>
 </template>
 

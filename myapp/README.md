@@ -50,6 +50,11 @@ git add 文件名
 git commit -m "描述"
 ```
 
+### 拉取main分支里的代码
+```
+git pull origin main
+```
+
 ### 将本地的分支和远程相关联
 ```
 git push --set-upstream origin 分支名
@@ -64,6 +69,7 @@ git push
 ```
 git merge 分支名
 ```
+
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

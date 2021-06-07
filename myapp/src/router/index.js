@@ -1,27 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from './../views/Home.vue'
-import Mine from './../views/Mine.vue'
-import Test1 from './../views/Test1.vue'
-import Error from './../views/Error.vue'
+import Home from './../views/home/index.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/home',
-    name: 'home',
-    component: Home,
-    children:[
-      {
-        path:"test1",
-        component: Test1
-      }
-    ]
-  },
-  {
-    path: '/mine/:name/:age',
-    component: Mine
+    path: '/',
+    component: Home
   },
   {
     path:'/*',

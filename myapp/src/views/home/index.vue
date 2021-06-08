@@ -7,6 +7,7 @@
             </div>
         </van-sticky>
         <category></category>
+        <div class="title">附近商家</div>
     </div>
 </template>
 
@@ -32,5 +33,22 @@
             padding: 0 0.2rem;
             box-sizing: border-box;
         }
+    }
+    .title{
+        font-size: 0.34rem;
+        font-weight: 800;
+        text-align: center;
+        height: 0.46rem;
+        line-height: 0.46rem;
+        margin: 0.3rem 0 0.1rem;
+    }
+    .title::after,.title::before{
+        content: '';
+        height: 1px;
+        transform: scale(0.5);
+        width: 30px;
+        display: inline-block;
+        background: #666;
+        vertical-align: middle;
     }
 </style>

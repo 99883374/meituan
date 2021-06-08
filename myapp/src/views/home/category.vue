@@ -10,7 +10,8 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    // import axios from 'axios'
+    import {getCategory} from '@/api/home.js' 
     export default {
         data(){
             return {
@@ -18,14 +19,18 @@
             }
         },
         created(){
-            axios.get("http://admin.gxxmglzx.com/tender/test/get_type").then(res=>{
-                if(res.data.errcode == 200){
-                    this.cateList = res.data.data
-                }else{
-                    console.log(res.data.errmsg)
-                }
-            }).catch(res=>{
-                console.log(res)
+            // axios.get("http://admin.gxxmglzx.com/tender/test/get_type").then(res=>{
+            //     if(res.data.errcode == 200){
+            //         this.cateList = res.data.data
+            //     }else{
+            //         console.log(res.data.errmsg)
+            //     }
+            // }).catch(res=>{
+            //     console.log(res)
+            // })
+            getCategory().then(res=>{
+                // console.log(res)
+                this.cateList = res.data
             })
         }
     }

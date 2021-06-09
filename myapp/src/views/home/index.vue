@@ -8,14 +8,17 @@
         </van-sticky>
         <category></category>
         <div class="title">附近商家</div>
+        <list></list>
     </div>
 </template>
 
 <script>
-    import category from './category.vue'
+    import category from './category'
+    import list from './list'
     export default {
         components:{
-            category
+            category,
+            list
         }
     }
 </script>

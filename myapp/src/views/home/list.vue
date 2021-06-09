@@ -1,51 +1,27 @@
 <template>
     <div>
         <ul class="list-container">
-            <li class="shop-list">
+            <li class="shop-list" v-for="obj in list" :key="obj.id">
                 <div class="img-box">
-                    <!-- <img src="" alt=""> -->
+                    <img :src="obj.img" :alt="obj.name">
                 </div>
                 <div class="info-box">
-                    <div class="title">奈雪</div>
+                    <div class="title">{{obj.name}}</div>
                     <div class="rate-box">
                         <div>
-                            <star :score="3.5"></star>
-                            <span class="rate">4.9分</span>
-                            <span>月销1000</span>
+                            <star :score="obj.score"></star>
+                            <span class="rate">{{obj.score}}分</span>
+                            <span>月销{{obj.num}}</span>
                         </div>
                         <div>
-                            <span>35分钟</span>
-                            <span class="left-line">10km</span>
+                            <span>{{obj.minute}}分钟</span>
+                            <span class="left-line">{{obj.distance}}</span>
                         </div>
                     </div>
                     <div class="distribution-box">
-                        <span>起送</span>
-                        <span class="left-line">配送</span>
-                        <span class="left-line">人均</span>
-                    </div>
-                </div>
-            </li>
-            <li class="shop-list">
-                <div class="img-box">
-                    <!-- <img src="" alt=""> -->
-                </div>
-                <div class="info-box">
-                    <div class="title">奈雪</div>
-                    <div class="rate-box">
-                        <div>
-                            <star :score="5"></star>
-                            <span class="rate">4.9分</span>
-                            <span>月销1000</span>
-                        </div>
-                        <div>
-                            <span>35分钟</span>
-                            <span class="left-line">10km</span>
-                        </div>
-                    </div>
-                    <div class="distribution-box">
-                        <span>起送</span>
-                        <span class="left-line">配送</span>
-                        <span class="left-line">人均</span>
+                        <span>起送{{obj.per_capita}}</span>
+                        <span class="left-line">配送{{obj.fee}}</span>
+                        <span class="left-line">人均{{obj.price}}</span>
                     </div>
                 </div>
             </li>
@@ -56,9 +32,33 @@
 
 <script>
     import star from './../../components/star'
+    import {getStore} from '@/api/home.js' 
+
     export default {
+        data(){
+            return {
+                current: 0,
+                size: 10,
+                list: []
+            }
+        },
         components:{
             star
+        },
+        methods:{
+            //获取商家列表
+            getDate(){
+                getStore({
+                    current:this.current,
+                    size: this.size
+                }).then(res=>{
+                    console.log(res)
+                    this.list = res.data.list
+                })
+            }
+        },
+        created(){
+            this.getDate()
         }
     }
 </script>

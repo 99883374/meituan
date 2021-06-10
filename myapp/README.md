@@ -40,16 +40,6 @@ git checkout 分支名
 git checkout -b dev
 ```
 
-### 添加到暂存区
-```
-git add 文件名
-```
-
-### 提交代码
-```
-git commit -m "描述"
-```
-
 ### 拉取某分支里的代码
 ```
 git pull origin 分支名
@@ -58,6 +48,22 @@ git pull origin 分支名
 ### 将本地的分支和远程相关联
 ```
 git push --set-upstream origin 分支名
+```
+
+### 将代码推到远程仓库
+```
+git push -u origin 分支名
+-u 代表第一次提交，以后就不用写-u了
+```
+
+### 添加到暂存区
+```
+git add 文件名
+```
+
+### 提交代码
+```
+git commit -m "描述"
 ```
 
 ### 推送代码

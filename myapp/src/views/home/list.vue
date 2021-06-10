@@ -1,7 +1,13 @@
 <template>
     <div>
+        <van-list
+            v-model="loading"
+            :finished="finished"
+            finished-text="没有更多了"
+            @load="getDate"
+            >
         <ul class="list-container">
-            <li class="shop-list" v-for="obj in list" :key="obj.id">
+            <li class="shop-list" v-for="obj in list" :key="obj.id" @click="goDetail(obj.id)">
                 <div class="img-box">
                     <img :src="obj.img" :alt="obj.name">
                 </div>
@@ -27,6 +33,7 @@
             </li>
 
         </ul>
+        </van-list>
     </div>
 </template>
 
@@ -39,7 +46,10 @@
             return {
                 current: 0,
                 size: 10,
-                list: []
+                total: 0,
+                list: [],
+                loading: false,
+                finished: false
             }
         },
         components:{
@@ -52,13 +62,23 @@
                     current:this.current,
                     size: this.size
                 }).then(res=>{
-                    console.log(res)
-                    this.list = res.data.list
+                    // console.log(res)
+                    // this.list = res.data.list
+                    this.list = this.list.concat(res.data.list)
+                    this.loading = false
+                    this.current++;
+                    this.total = res.data.total;
+                    if(this.list.length >= this.total){
+                        this.finished = true
+                    }
                 })
+            },
+            goDetail(id){
+                this.$router.push({path:"/detail",query:{id}})
             }
         },
         created(){
-            this.getDate()
+            // this.getDate()
         }
     }
 </script>

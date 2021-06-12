@@ -8,7 +8,7 @@
                 <img :src="seller.img" alt="">
             </div>
             <div class="info-box">
-                <div class="time">{{seller.mintue}}分钟 {{seller.distance}}km</div>
+                <div class="time">{{seller.minute}}分钟 {{seller.distance}}</div>
                 <div class="notice">{{seller.notice}}</div>
                 <div class="sale">{{seller.full}}</div>
             </div>

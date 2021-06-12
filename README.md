@@ -3,8 +3,14 @@
 
 sass
 axios
-export default和export区别
+vuex
 new Promise
+export default和export区别
+
+# 插件
+vant
+betterScroll
+
 
 
 # 溢出显示...

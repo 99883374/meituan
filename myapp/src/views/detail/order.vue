@@ -1,12 +1,16 @@
 <template>
     <div>
         <div class="order-box">
-            <div class="menu-box">
+            <div class="menu-box" ref="menuBox">
                 <ul>
-                    <li v-for="(item,index) in productList" :key="index" class="menu-list">{{item.name}}</li>
+                    <li v-for="(item,index) in productList" 
+                    :key="index" 
+                    class="menu-list" 
+                    :class="{'active': currentIndex == index ? true : false}" 
+                    @click="changeMenu(index)">{{item.name}}</li>
                 </ul>
             </div>
-            <div class="prod-box">
+            <div class="prod-box" ref="prodBox">
                 <ul>
                     <li class="cate-list" v-for="(item,index) in productList" :key="index">
                         <div class="cate-title">{{item.name}}</div>
@@ -37,6 +41,11 @@
             return {
                 menuScroll: null,
                 prodScroll: null,
+                currentIndex: 0,
+                posY: [],
+                prodList: [],
+                menuList: [],
+                scrollY: 0
             }
         },
         methods: {
@@ -47,8 +56,35 @@
                 })
                 this.prodScroll = new BScroll('.prod-box',{
                     bounce: false,
-                    click: true
+                    click: true,
+                    probeType: 3,//实时获取滚动事件
                 })
+                //获取右侧每个分类垂直位置
+                this.getPosY();
+                //获取左侧li列表
+                this.menuList = this.$refs.menuBox.getElementsByClassName('menu-list');
+                this.prodScroll.on("scroll",e=>{
+                    this.scrollY = Math.abs(Math.round(e.y))
+                })
+            },
+            changeMenu(index){
+                let prodList = this.$refs.prodBox.getElementsByClassName('cate-list');
+                let el = prodList[index]
+                this.prodScroll.scrollToElement(el,300)
+                this.currentIndex = index
+            },
+            getPosY(){
+                let prodList = this.$refs.prodBox.getElementsByClassName('cate-list');
+                let y = 0;
+                for(let i = 0; i<prodList.length; i++){
+                    if(i == 0){
+                        this.posY.push(y)
+                    }else{
+                        let prevEle = prodList[i-1];
+                        y += prevEle.offsetHeight;
+                        this.posY.push(y)
+                    }
+                }
             }
         },
         computed: {
@@ -63,6 +99,21 @@
                     this.initScroll()
                 })
             })
+        },
+        watch: {
+            scrollY(val){
+                for(let i = 0; i < this.posY.length;i++){
+                    let pos1 = this.posY[i];
+                    let pos2 = this.posY[i+1];
+                    if(pos1 <= val && pos2 > val){
+                        //i是要的索引
+                        let el = this.menuList[i];
+                        this.menuScroll.scrollToElement(el,300,0,-100)
+                        this.currentIndex = i;
+                        break
+                    }
+                }
+            }
         }
     }
 </script>
@@ -102,7 +153,7 @@
             }
             .prod-list{
                 display: flex;
-                margin-bottom: 0.4rem;
+                padding-bottom: 0.4rem;
                 .prod-img-box{
                     width: 1.5rem;
                     flex: 0 0 1.5rem;

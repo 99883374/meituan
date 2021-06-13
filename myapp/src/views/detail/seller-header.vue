@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <div class="header">
-            <span class="iconfont icon-fanhui" @click="$router.push('/')"></span>
+        <div class="header" @click="$router.push('/')">
+            <span class="iconfont icon-fanhui"></span>
         </div>
         <div class="seller-box">
             <div class="img-box">

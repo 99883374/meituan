@@ -31,7 +31,7 @@
 
 <script>
     import {mapState} from 'vuex';
-    import BScroll from 'better-scroll'
+    import BScroll from "better-scroll";
     export default {
         data(){
             return {
@@ -41,8 +41,14 @@
         },
         methods: {
             initScroll(){
-                this.menuScroll = new BScroll('.menu-box')
-                this.prodScroll = new BScroll('.prod-box')
+                this.menuScroll = new BScroll('.menu-box',{
+                    bounce: false,
+                    click: true
+                })
+                this.prodScroll = new BScroll('.prod-box',{
+                    bounce: false,
+                    click: true
+                })
             }
         },
         computed: {
@@ -52,7 +58,7 @@
         created() {
             this.$store.dispatch('product/getProdList',this.$route.query.id).then(()=>{
                 //初始化BScroll
-                //this.$nextTick()将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新
+                //this.$nextTick() 数据请求完成，页面渲染完成以后
                 this.$nextTick(()=>{
                     this.initScroll()
                 })
@@ -64,11 +70,14 @@
 <style lang="scss" scoped>
 .order-box{
     display: flex;
+    height: calc(100vh - 44px);
+    overflow: hidden;
     .menu-box{
         width: 1.6rem;
         flex: 0 0 1.6rem;
         background-color: #f5f5f5;
         height: calc(100vh - 94px);
+        overflow: hidden;
         .menu-list{
             color: #2c3e50;
             font-size: 0.26rem;
@@ -84,6 +93,7 @@
         min-width: 0;
         background-color: #fff;
         height: calc(100vh - 94px);
+        overflow: hidden;
         .cate-list{
             padding: 0 0.2rem;
             .cate-title{

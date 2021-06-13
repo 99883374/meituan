@@ -76,6 +76,12 @@ git push
 git merge 分支名
 ```
 
+### npm安装指定版本号的组件
+```
+npm install --save better-scroll@1.12.0
+```
+
+
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

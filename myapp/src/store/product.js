@@ -11,7 +11,6 @@ const product = {
     mutations: {
         saveProdList(state,arr){
             state.productList = [...arr]
-            console.log(this.productList)
         }
     },
     actions: {

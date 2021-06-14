@@ -12,10 +12,10 @@
             </div>
             <div class="prod-box" ref="prodBox">
                 <ul>
-                    <li class="cate-list" v-for="(item,index) in productList" :key="index">
+                    <li class="cate-list" v-for="(item,typeIndex) in productList" :key="typeIndex">
                         <div class="cate-title">{{item.name}}</div>
                         <ul>
-                            <li class="prod-list" v-for="prod in item.content" :key="prod.id">
+                            <li class="prod-list" v-for="(prod,index) in item.content" :key="prod.id">
                                 <div class="prod-img-box">
                                     <img :src="prod.img" alt="">
                                 </div>
@@ -23,6 +23,9 @@
                                     <div class="name">{{prod.name}}</div>
                                     <div class="sale"><span class="num">月销{{prod.num}}</span><span>赞{{prod.up}}</span></div>
                                     <div class="price">￥{{prod.price}}</div>
+                                </div>
+                                <div class="add-cart-container">
+                                    <addCart :type="typeIndex" :index="index"></addCart>
                                 </div>
                             </li>
                         </ul>
@@ -36,6 +39,7 @@
 <script>
     import {mapState} from 'vuex';
     import BScroll from "better-scroll";
+    import addCart from "../../components/add-cart";
     export default {
         data(){
             return {
@@ -45,8 +49,11 @@
                 posY: [],
                 prodList: [],
                 menuList: [],
-                scrollY: 0
+                scrollY: 0,
             }
+        },
+        components:{
+            addCart
         },
         methods: {
             initScroll(){
@@ -56,7 +63,7 @@
                 })
                 this.prodScroll = new BScroll('.prod-box',{
                     bounce: false,
-                    click: true,
+                    // click: true,
                     probeType: 3,//实时获取滚动事件
                 })
                 //获取右侧每个分类垂直位置
@@ -154,6 +161,7 @@
             .prod-list{
                 display: flex;
                 padding-bottom: 0.4rem;
+                position: relative;
                 .prod-img-box{
                     width: 1.5rem;
                     flex: 0 0 1.5rem;
@@ -164,6 +172,7 @@
                 }
                 .prod-info{
                     flex: 1;
+                    min-width: 0;
                     .name{
                         font-size: 0.32rem;
                         color: #333;
@@ -186,6 +195,11 @@
                         color: #fb4e44;
                         font-size: 0.36rem;
                     }
+                }
+                .add-cart-container{
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
                 }
             }
         }

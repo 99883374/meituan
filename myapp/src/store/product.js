@@ -1,5 +1,5 @@
 import {getProdById} from '@/api/detail'
-
+import Vue from 'vue'
 const product = {
     namespaced: true,
     state: {
@@ -11,6 +11,21 @@ const product = {
     mutations: {
         saveProdList(state,arr){
             state.productList = [...arr]
+        },
+        addCart(state,{type,index}){
+            //分类 索引
+            let prod = state.productList[type].content[index];
+            if(prod.count){
+                Vue.set(prod,'count',prod.count+1)
+            }else{
+                Vue.set(prod,'count',1)
+            }
+        },
+        reduceCart(state,{type,index}){
+            let prod = state.productList[type].content[index];
+            if(prod.count){
+                Vue.set(prod,'count',prod.count-1)
+            }
         }
     },
     actions: {

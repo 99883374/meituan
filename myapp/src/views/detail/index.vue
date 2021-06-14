@@ -10,6 +10,7 @@
                 <van-tab title="商家">商家</van-tab>
             </van-tabs>
         </div>
+        <cart></cart>
     </div>
 </template>
 
@@ -18,6 +19,7 @@
     import sellerHeader from "./seller-header.vue"
     import order from "./order.vue"
     import BScroll from "better-scroll";
+    import cart from "./cart.vue";
 
     export default {
         data(){
@@ -29,7 +31,8 @@
         },
         components:{
             sellerHeader,
-            order
+            order,
+            cart
         },
         methods:{
             getStoreMsg(){

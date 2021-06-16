@@ -15,7 +15,7 @@
             }
         },
         methods:{
-            addCart(){
+            addCart(e){
                 this.$store.commit("product/addCart",{type:this.type,index:this.index})
                 this.$store.commit('ball/show',e.target)
             },

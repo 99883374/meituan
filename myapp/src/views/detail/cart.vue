@@ -47,7 +47,7 @@ import {mapGetters,mapState} from 'vuex';
                     let ball = this.ballList[i]
                     if(ball.show){
                         let pos = ball.el.getBoundingClientRect()
-                        let y = window.innerHeight - pos.top() - 23;
+                        let y = window.innerHeight - pos.top - 23;
                         let x = pos.left - 30;
                         el.display = "";
                         el.style.transform = `translate3d(0,${-y}px,0)`
@@ -56,14 +56,19 @@ import {mapGetters,mapState} from 'vuex';
                     }
                 }
             },
-            enter(){
+            enter(el,done){
                 el.offsetWidth;
                 this.$nextTick(()=>{
-                    
+                    el.style.transform = `translate3d(0,0,0)`
+                    let inner = el.getElementsByClassName('inner')[0]
+                    inner.style.transform = `translate3d(0,0,0)`
+                    el.addEventListener('transitionend',done)
                 })
             },
-            afterEnter(){
-
+            afterEnter(el){
+                el.style.display = 'none'
+                //释放小球
+                this.$store.commit('ball/removeBall')
             }
         }
     }
@@ -156,12 +161,14 @@ import {mapGetters,mapState} from 'vuex';
         position: fixed;
         left: 30px;
         bottom: 23px;
+        transition: all 0.4s cubic-bezier(0.48,-0.28,0.73,0.42);
         .inner{
             width: 16px;
             height: 16px;
             border-radius: 50%;
             // background-color: #f8c74e;
             background-color: #fb4e44;
+            transition: all 0.4s linear;
         }
     }
 }

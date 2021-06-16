@@ -20,16 +20,29 @@
                 </transition>
             </div>
         </div>
+        <div class="cart-list-box">
+            <div class="title"><span>清空购物车</span></div>
+            <ul class="list-box">
+                <li class="list" v-for="prod in selectList" :key="prod.id">
+                    <span class="name">{{prod.name}}</span>
+                    <span class="price">￥{{prod.price}}</span>
+                    <addCart></addCart>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
 <script>
 import {mapGetters,mapState} from 'vuex';
-
+import addCart from "@/components/add-cart"
     export default {
+        components:{
+            addCart
+        },
         props: ["seller"],
         computed: {
-            ...mapGetters('product',["totalPrice","total"]),
+            ...mapGetters('product',["totalPrice","total","selectList"]),
             ...mapState('ball',["ballList"]),
             buyDeac(){
                 if(this.totalPrice == 0){
@@ -170,6 +183,45 @@ import {mapGetters,mapState} from 'vuex';
             background-color: #fb4e44;
             transition: all 0.4s linear;
         }
+    }
+    .cart-list-box{
+        position: absolute;
+        left: 0;
+        bottom: 50px;
+        background: #fff;
+        border-top: 1px solid #e4e4e4;
+        width: 100%;
+        z-index: -1;
+        .title{
+            height: 30px;
+            line-height: 30px;
+            padding: 0 10px;
+            text-align: right;
+            background: #f4f4f4;
+            font-size: 12px;
+            color: #2c3e50;
+        }
+        .list-box{
+            padding: 0 10px;
+            .list{
+                padding: 14px 0;
+                border-bottom: 1px solid #e4e4e4;
+                display: flex;
+                
+                .name{
+                    flex: 1;
+                    min-width: 0;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                .price{
+                    color: #fb4e44;
+                    // padding: 0 25px;
+                }
+            }
+        }
+
     }
 }
 </style>

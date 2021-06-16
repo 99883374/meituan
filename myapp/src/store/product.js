@@ -6,7 +6,29 @@ const product = {
         productList: []
     },
     getters:{
-
+        selectList(state){
+            let result = [];
+            state.productList.forEach(obj=>{
+                obj.content.forEach(prod=>{
+                    if(prod.count){
+                        result.push(prod)
+                    }
+                })
+            })
+            return result
+        },
+        //计算总价
+        totalPrice(state,getter){
+            return getter.selectList.reduce((price,prod)=>{
+                return price + prod.count * prod.price
+            },0)
+        },
+        //商品总数量
+        total(state,getter){
+            return getter.selectList.reduce((total,prod)=>{
+                return total + prod.count
+            },0)
+        }
     },
     mutations: {
         saveProdList(state,arr){

@@ -1,22 +1,71 @@
 <template>
     <div class="cart-container">
         <div class="cart-box">
-            <div class="cart-icon active">
+            <div class="cart-icon" :class="{'active':total}">
                 <span class="iconfont icon-gouwuche1"></span>
-                <span class="num">2</span>
+                <span class="num" v-show="total">{{total}}</span>
             </div>
-            <div class="cart-price active">
-                <div class="price">￥30</div>
-                <div class="deliver">另需配送费￥6</div>
+            <div class="cart-price" :class="{'active':total}">
+                <div class="price">￥{{totalPrice}}</div>
+                <div class="deliver">另需配送费￥{{seller.fee}}</div>
             </div>
-            <div class="cart-buy active">￥15元起送</div>
+            <div class="cart-buy" :class="{'active':totalPrice>seller.price}">{{buyDeac}}</div>
+        </div>
+        <div class="ball-box"> 
+            <div v-for="(ball,index) in ballList" :key="index">
+                <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+                    <div class="ball" v-show="ball.show">
+                        <div class="inner"></div>
+                    </div>
+                </transition>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import {mapGetters,mapState} from 'vuex';
+
     export default {
-        
+        props: ["seller"],
+        computed: {
+            ...mapGetters('product',["totalPrice","total"]),
+            ...mapState('ball',["ballList"]),
+            buyDeac(){
+                if(this.totalPrice == 0){
+                    return `￥${this.seller.price}元起送`
+                }else if(this.totalPrice < this.seller.price){
+                    return `还差￥${this.seller.price - this.totalPrice}元起送`
+                }else{
+                    return `去结算`
+                }
+            }
+        },
+        methods: {
+            beforeEnter(el){
+                for(let i = 0; i<this.ballList.length;i++){
+                    let ball = this.ballList[i]
+                    if(ball.show){
+                        let pos = ball.el.getBoundingClientRect()
+                        let y = window.innerHeight - pos.top() - 23;
+                        let x = pos.left - 30;
+                        el.display = "";
+                        el.style.transform = `translate3d(0,${-y}px,0)`
+                        let inner = el.getElementsByClassName('inner')[0]
+                        inner.style.transform = `translate3d(${x}px,0,0)`
+                    }
+                }
+            },
+            enter(){
+                el.offsetWidth;
+                this.$nextTick(()=>{
+                    
+                })
+            },
+            afterEnter(){
+
+            }
+        }
     }
 </script>
 
@@ -101,6 +150,18 @@
                 color: #333;
                 font-weight: normal;
             }
+        }
+    }
+    .ball{
+        position: fixed;
+        left: 30px;
+        bottom: 23px;
+        .inner{
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            // background-color: #f8c74e;
+            background-color: #fb4e44;
         }
     }
 }

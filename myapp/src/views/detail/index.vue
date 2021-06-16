@@ -10,7 +10,7 @@
                 <van-tab title="商家">商家</van-tab>
             </van-tabs>
         </div>
-        <cart></cart>
+        <cart :seller="seller"></cart>
     </div>
 </template>
 

@@ -25,9 +25,9 @@
                         </div>
                     </div>
                     <div class="distribution-box">
-                        <span>起送{{obj.per_capita}}</span>
-                        <span class="left-line">配送{{obj.fee}}</span>
-                        <span class="left-line">人均{{obj.price}}</span>
+                        <span>起送￥{{obj.per_capita}}</span>
+                        <span class="left-line">配送￥{{obj.fee}}</span>
+                        <span class="left-line">人均￥{{obj.price}}</span>
                     </div>
                 </div>
             </li>

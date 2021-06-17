@@ -1,6 +1,7 @@
 <template>
+<div>
     <div class="cart-container">
-        <div class="cart-box">
+        <div class="cart-box" @click="isShow = !isShow">
             <div class="cart-icon" :class="{'active':total}">
                 <span class="iconfont icon-gouwuche1"></span>
                 <span class="num" v-show="total">{{total}}</span>
@@ -20,23 +21,33 @@
                 </transition>
             </div>
         </div>
-        <div class="cart-list-box">
-            <div class="title"><span>清空购物车</span></div>
-            <ul class="list-box">
-                <li class="list" v-for="prod in selectList" :key="prod.id">
-                    <span class="name">{{prod.name}}</span>
-                    <span class="price">￥{{prod.price}}</span>
-                    <addCart></addCart>
-                </li>
-            </ul>
-        </div>
+        <transition name="fade">
+            <div class="cart-list-box" v-show="isShow & total">
+                <div class="title"><span @click="clearCart()">清空购物车</span></div>
+                <ul class="list-box">
+                    <li class="list" v-for="prod in selectList" :key="prod.id">
+                        <span class="name">{{prod.name}}</span>
+                        <span class="price">￥{{prod.price}}</span>
+                        <addCart :type="prod.type" :index="prod.index"></addCart>
+                    </li>
+                </ul>
+            </div>
+        </transition>
     </div>
+    <div class="mask" v-show="isShow & total" @click="isShow = !isShow"></div>
+</div>
+    
 </template>
 
 <script>
 import {mapGetters,mapState} from 'vuex';
 import addCart from "@/components/add-cart"
     export default {
+        data(){
+            return{
+                isShow:false
+            }
+        },
         components:{
             addCart
         },
@@ -82,7 +93,10 @@ import addCart from "@/components/add-cart"
                 el.style.display = 'none'
                 //释放小球
                 this.$store.commit('ball/removeBall')
-            }
+            },
+            clearCart(){
+                this.$store.commit('product/clearList')
+            },
         }
     }
 </script>
@@ -95,6 +109,7 @@ import addCart from "@/components/add-cart"
     height: 50px;
     background-color: #3b3b3c;
     width: 100%;
+    z-index: 51;
     .cart-box{
         display: flex;
         .cart-icon{
@@ -107,6 +122,7 @@ import addCart from "@/components/add-cart"
             border-radius: 50%;
             text-align: center;
             line-height: 50px;
+            background-color: #3b3b3c;
             .num{
                 position: absolute;
                 right: 0;
@@ -135,6 +151,7 @@ import addCart from "@/components/add-cart"
             padding-left: 70px;
             flex: 1;
             color: #999;
+            background-color: #3b3b3c;
             .price{
                 display: none;
             }
@@ -162,6 +179,7 @@ import addCart from "@/components/add-cart"
             font-weight: bold;
             text-align: center;
             line-height: 50px;
+            background-color: #3b3b3c;
             &.active{
                 background-color: #f8c74e;
                 font-size: 18px;
@@ -207,7 +225,7 @@ import addCart from "@/components/add-cart"
                 padding: 14px 0;
                 border-bottom: 1px solid #e4e4e4;
                 display: flex;
-                
+                align-items: center;
                 .name{
                     flex: 1;
                     min-width: 0;
@@ -223,5 +241,24 @@ import addCart from "@/components/add-cart"
         }
 
     }
+    .fade-enter{
+        transform: translateY(100%);
+    }
+    .fade-enter-active{
+        transition: transform ease 200ms;
+    }
+    .fade-enter-to{
+        transform: translateY(0);
+    }
+}
+.mask{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(7,17,27,0.6);
+    backdrop-filter: blur(10px);
+    z-index: 50;
 }
 </style>

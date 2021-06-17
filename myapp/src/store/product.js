@@ -48,6 +48,16 @@ const product = {
             if(prod.count){
                 Vue.set(prod,'count',prod.count-1)
             }
+        },
+        clearList(state){
+            state.productList.forEach(item=>{
+                console.log(item);
+                item.content.forEach(prod=>{
+                    if(prod.count){
+                        prod.count = 0
+                    }
+                })
+            })
         }
     },
     actions: {
@@ -56,7 +66,15 @@ const product = {
             return new Promise(resolve=>{
                 getProdById({id}).then(res=>{
                     // console.log(res)
-                    commit('saveProdList',res.data.goods)
+                    //分类 索引
+                    let list = res.data.goods;
+                    list.forEach((item,type)=>{
+                        item.content.forEach((prod,index)=>{
+                            prod.type = type;
+                            prod.index = index
+                        })
+                    })
+                    commit('saveProdList',list)
                     resolve()
                 })
             })

@@ -1,4 +1,5 @@
-@mixin border-fix ($color:#000,$raduis:0){
+//处理边框在ios显示不正常的问题
+@mixin border-fix ($color:#000,$radius:0){
     position: relative;
     &::after{
         content: "";
@@ -10,7 +11,11 @@
         height: 200%;
         transform: scale(0.5);
         transform-origin: 0 0 ;
-        border-radius: $raduis;
+        border-radius: $radius;
+        -webkit-border-radius: $radius;
+        -moz-border-radius: $radius;
+        -ms-border-radius: $radius;
+        -o-border-radius: $radius;
     }
 }
 @mixin border-top-1px($color){

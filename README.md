@@ -8,6 +8,7 @@ new Promise
 export default和export区别
 $route和$router的区别
 mixin函数
+$emit
 
 # 插件
 vant

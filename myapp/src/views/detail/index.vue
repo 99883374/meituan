@@ -9,7 +9,9 @@
                 <van-tab title="评价">
                     <comment></comment>
                 </van-tab>
-                <van-tab title="商家">商家</van-tab>
+                <van-tab title="商家">
+                    <seller :seller="seller"></seller>
+                </van-tab>
             </van-tabs>
         </div>
         <cart :seller="seller"></cart>
@@ -23,6 +25,7 @@
     import BScroll from "better-scroll";
     import cart from "./cart.vue";
     import comment from "./../comment"
+    import seller from "./../seller"
 
     export default {
         data(){
@@ -36,7 +39,8 @@
             sellerHeader,
             order,
             cart,
-            comment
+            comment,
+            seller
         },
         methods:{
             getStoreMsg(){
